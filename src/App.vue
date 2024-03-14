@@ -1,28 +1,47 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <nav-bar />
+    <v-main>
+      <stepper-view :step="step" @nextStep="updateStep" />
+      <company-form  @nextStep="updateStep" v-if="step == 1" />
+      <user-form  @nextStep="updateStep" v-if="step == 2" />
+      <submit-form  @nextStep="updateStep" v-if="step == 3" />
+    </v-main>
+    <app-footer />
+  </v-app>
 </template>
+<style>
+@import url(./assets/css/index.scss);
+</style>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavBar from "./components/NavBar.vue";
+import AppFooter from "./components/AppFooter.vue";
+import CompanyForm from "./components/CompanyForm.vue";
+import UserForm from "./components/UserForm.vue";
+import SubmitForm from "./components/SubmitForm.vue";
+import StepperView from "./components/StepperView.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  name: "App",
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    NavBar,
+    AppFooter,
+    CompanyForm,
+    UserForm,
+    SubmitForm,
+    StepperView,
+  },
+
+  data: () => ({
+    //
+    step: 1,
+  }),
+  methods: {
+    updateStep(step) {
+      this.step = step;
+    },
+  },
+};
+</script>
